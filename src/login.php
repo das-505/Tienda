@@ -1,3 +1,21 @@
+<?php 
+   
+    
+    
+//   require_once __DIR__ . "/server/popos/User.php";
+     require_once __DIR__ . "/server/daos/connectToDataBase.php";
+
+    session_start();
+
+    $tablename = "users";
+
+    $db = new DataBase();
+    $allUsers = $db->getAll($tablename);
+    echo print_r($allUsers[0]["email"]);
+    $db->close();
+?> 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,11 +45,11 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" action="../src/server/daos/connectToDataBase.php" method="POST">
         <div>
-          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">UserName</label>
+          <label for="Email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
           <div class="mt-2">
-            <input id="username" name="username" type="text" autocomplete="username" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input id="Email" name="Email" type="email" autocomplete="Email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
