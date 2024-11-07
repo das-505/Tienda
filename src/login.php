@@ -24,14 +24,12 @@ require_once __DIR__ . "/server/daos/DatabaseController.php";
 </head>
 
 <body>
-  <div class="" name="footerConteiner">
+  
     <header>
       <?php
       require_once "./server/parts/navbar.php";
       ?>
     </header>
-
-
 
     <main>
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -83,7 +81,6 @@ require_once __DIR__ . "/server/daos/DatabaseController.php";
       ?>
     </footer>
 
-  </div>
 </body>
 
 </html>

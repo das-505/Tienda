@@ -42,7 +42,7 @@ if (isset($_SESSION["logged_user"]))
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <a href="index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Home</a>
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+              <a href="product.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Products</a>
             </div>
           </div>
         </div>
@@ -50,6 +50,7 @@ if (isset($_SESSION["logged_user"]))
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
           <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             <span class="absolute -inset-1.5"></span>
+            <!--cesta de la compra-->
             <span class="sr-only">View shopping basket</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13l-1.5 5.5m11-5.5L16.5 18.5M7 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0m10 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0" />
