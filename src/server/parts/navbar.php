@@ -56,10 +56,11 @@ if (isset($_SESSION["logged_user"]))
             </svg>
           </button>
 
-          <!-- Menú para usuarios autenticados o no autenticados -->
-          <?php
-           if ($loggedUser != null){      
-            ?>
+          <!-- Menú para usuarios autenticados o no autenticados -->  
+<?php
+if ($loggedUser != null){      
+?>
+
             <div class="relative ml-3">
               <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="sr-only">Open user menu</span>
@@ -75,16 +76,15 @@ if (isset($_SESSION["logged_user"]))
               </div>
             </div>
 
-          <?php 
-           } else { 
-          ?>
+<?php 
+} else { 
+?>
 
             <a href="login.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Log in</a>
             <a href="registro.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign in</a>
-          
-          <?php
-           } 
-          ?>
+<?php
+} 
+?>
       
         </div>
       </div>

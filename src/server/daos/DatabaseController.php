@@ -49,8 +49,7 @@ class DatabaseController {
             
                 $query .= " $key = '$value' ";
             }
-        }
-        echo"$query";
+        }    
         $stmt = $this->executeQuery($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

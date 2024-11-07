@@ -3,6 +3,7 @@
     require_once __DIR__ . "/ActionRegister.php";
     require_once __DIR__ . "/ActionLogin.php";
 
+    
     $action = null;
     switch($_POST["action"]){
         case "register":

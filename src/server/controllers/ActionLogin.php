@@ -13,11 +13,7 @@ class ActionLogin implements IAction{
             "email" => $_POST["email"]
         );
         $user = $db->getByData("users", $data);
-        
-        print_r(sizeof($user));
-        
-        
-        
+              
         if(count($user) > 0){
             if(password_verify($pass, $user[0]["password"])){
                 echo "Autenticación correcta! " . $user[0]["email"] . " " . $user[0]["password"]; 
