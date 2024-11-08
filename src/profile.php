@@ -15,7 +15,19 @@
         ?>
     </header>
 
+    <?php
+    require_once("server/parts/navbar.php");
+    $loggedUser = null;
+    if (isset($_SESSION["logged_user"]))
+        $loggedUser = $_SESSION["logged_user"];
+
+    if ($loggedUser == null) {
+        header('Location: index.php');
+        exit();
+    }
+    ?>
+
     hola
 </body>
-
+<!--estoy probando cosas nada importante-->
 </html>

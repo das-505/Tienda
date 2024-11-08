@@ -1,16 +1,17 @@
-<?php 
+<?php
 require_once __DIR__ . "/../popos/users.php";
 
-if (session_status() === PHP_SESSION_NONE) 
+if (session_status() === PHP_SESSION_NONE)
   session_start();
 
 $loggedUser = null;
-if (isset($_SESSION["logged_user"])) 
+if (isset($_SESSION["logged_user"]))
   $loggedUser = unserialize($_SESSION["logged_user"]);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@ if (isset($_SESSION["logged_user"]))
             </svg>
           </button>
         </div>
-        
+
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div class="flex flex-shrink-0 items-center">
             <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
@@ -57,16 +58,19 @@ if (isset($_SESSION["logged_user"]))
             </svg>
           </button>
 
-          <!-- Menú para usuarios autenticados o no autenticados -->  
-<?php
-if ($loggedUser != null){      
-?>
+          <!-- Menú para usuarios autenticados o no autenticados -->
+          <?php
+          if ($loggedUser != null) {
+          ?>
 
             <div class="relative ml-3">
               <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <span class="sr-only">Open user menu</span>
-                <span class="text-white"><?php echo htmlspecialchars($loggedUser->getUsername()); ?></span>
+                <span class="text-white">
+                  <!--para mostrar le nombre de la cuenta registrada-->
+                  <?php echo htmlspecialchars($loggedUser->getUsername()); ?>
+                </span>
               </button>
+              <!--Menú desplegable del usuario-->
               <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700">Profile</a>
                 <a href="settings.php" class="block px-4 py-2 text-sm text-gray-700">Settings</a>
@@ -76,17 +80,16 @@ if ($loggedUser != null){
                 </form>
               </div>
             </div>
-
-<?php 
-} else { 
-?>
+          <?php
+          } else {
+          ?>
 
             <a href="login.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Log in</a>
             <a href="registro.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign in</a>
-<?php
-} 
-?>
-      
+          <?php
+          }
+          ?>
+
         </div>
       </div>
     </div>
@@ -110,4 +113,5 @@ if ($loggedUser != null){
     </div>
   </nav>
 </body>
+
 </html>
