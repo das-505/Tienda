@@ -11,6 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $busquedaProducto = isset($_POST['busqueda-producto']) ? $_POST['busqueda-producto'] : 'Invitado';
 
     $auxProduct = new Product();
+    $auxProduct->getName();
+    $auxProduct->getPrice();
 
 }
 

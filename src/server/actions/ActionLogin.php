@@ -18,7 +18,7 @@ class ActionLogin implements IAction
         $data = array(
             "email" => $_POST["email"]
         );
-        $user = $db->getByData("users", $data);
+        $user = $db->getByData("users", $data,);
 
         if (count($user) > 0) {
             echo "Autenticación correcta! " . $user[0]["email"] . " " . $user[0]["password"];
