@@ -1,3 +1,19 @@
+<?php 
+require_once __DIR__ . "/server/popos/Users.php";
+
+    if(session_start() === PHP_SESSION_NONE)
+    session_start();
+
+    $loggedUser = null;
+    if (isset($_SESSION["logged_user"]))
+    $loggedUser = unserialize($_SESSION["logged_user"]);
+
+    if ($loggedUser == null) {
+        header('Location: ../src/index.php');
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,14 +40,13 @@
                 <h2 class="font-bold text-lg mt-4">My profile</h2>
                 <p class="text-gray-500">myProfile@gmail.com</p>
             </div>
-
             <!-- Profile Settings Form -->
             <div class="w-full md:w-2/4 ">
                 <h4 class="text-xl font-semibold mb-5">Profile Settings</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="First name">
+                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="First name" >
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Surname</label>
@@ -49,12 +64,12 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Email ID</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter email ID">
+                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter email ID" value="<?php echo htmlspecialchars($loggedUser->getEmail());?>">
                     </div>
 
                 </div>
                 <div class="text-center mt-10">
-                <button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-500 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-700">
+                    <button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-500 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-700">
                         Save Profile
                     </button>
 
@@ -63,12 +78,11 @@
         </div>
     </div>
 
-
-
     <footer>
         <?php
         require_once "./server/parts/footer.php";
-        ?>
+       
+       ?>
     </footer>
 </body>
 

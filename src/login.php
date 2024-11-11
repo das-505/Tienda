@@ -8,7 +8,6 @@ require_once __DIR__ . "/server/daos/DatabaseController.php";
     $tablename = "users";
     $db = new DatabaseController();
     $allUsers = $db->getAll($tablename);
-    echo print_r($allUsers[0]["email"]);
     $db->close();
     
 ?>
