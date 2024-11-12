@@ -5,7 +5,7 @@ function solicitarCatalogo() {
 
     // Obtener el contenedor y la tarjeta de ejemplo
     var catalogoContainer = document.getElementById("catalogo-container-row");
-    var cardEjemplo = document.querySelector("card");
+    var cardEjemplo = document.querySelector(".group.relative");
 
     // Crear la solicitud AJAX
     var xhr = new XMLHttpRequest();

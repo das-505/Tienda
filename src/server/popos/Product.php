@@ -5,11 +5,14 @@ class Product{
     const ATTR_PRODUCT_NAME = "ATTR_PRODUCT_NAME";
     const ATTR_PRODUCT_DESCRIPTION = "ATTR_PRODUCT_DESCRIPTION";
     const ATTR_PRODUCT_PRICE = "ATTR_PRODUCT_PRICE";
+    const ATTR_PRODUCT_IMG = "ATTR_PRODUCT_IMG";
+
     
     // ATTRIBUTES
     protected int $id = -1;
     protected string $name = "", $description = "";
     protected float $price = 12.95;
+    protected string $rutaImg;
 
     // Getter para id
     public function getId(): int {
@@ -52,5 +55,11 @@ class Product{
     public function setDescription(string $description): void {
         $this->description = $description;
     }
+    public function getImage(): string{
+        return $this->rutaImg;
+    }
 
+    public function setImage(string $rutaImg):void {
+        $this->rutaImg = $rutaImg;
+    }
 }
