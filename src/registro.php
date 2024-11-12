@@ -67,9 +67,6 @@ session_start();
                     </div>
 
                 </form>
-                <p class="text-center text-gray-500 text-xs">
-                    &copy;2024 Acme Corp. All rights reserved.
-                </p>
             </div>
         </div>
 

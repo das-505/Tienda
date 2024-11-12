@@ -74,6 +74,20 @@ class DatabaseController {
         return $this->connection->lastInsertId();
     }
 
+    public function saveImage($name, $price, $description, $imagePath) {
+        // Definir los datos para la inserción
+        $data = [
+            'name' => $name,
+            'price' => $price,
+            'img' => $imagePath,
+            'description' => $description
+        ];
+    
+        // Llamar al método insert para insertar en la tabla 'products'
+        return $this->insert('products', $data);
+    }
+    
+
     // Método para cerrar la conexión
     public function close() {
         $this->connection = null;
