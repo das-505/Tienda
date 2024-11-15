@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../interfaces/IAction.php";
 require_once __DIR__ . "/../actions/ActionRegister.php";
 require_once __DIR__ . "/../actions/ActionLogin.php";
+require_once __DIR__ . "/../actions/ActionInsertProduct.php";
 
 
 $action = null;
@@ -20,10 +21,14 @@ else
             header('Location: ../../index.php');
             exit();
             break;
+        case 'insert_product':
+            $action = new ActionInsertProduct();
+            break;
         default:
             echo "NO existe este usuario";
             break;
     }
 
 if ($action != null && $action instanceof IAction)
-    $action->execute($_POST, $_SESSION);
+    $action->execute($_POST, $_SESSION, $_FILES);
+?>

@@ -1,5 +1,5 @@
 <?php
     interface IAction{
-        function execute($post);
+        function execute($post,);
     }
 ?>
