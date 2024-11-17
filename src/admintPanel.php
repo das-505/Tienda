@@ -6,9 +6,8 @@ require_once __DIR__ . "/server/actions/ActionDeleteProduct.php";
 $getPro = new ActionGetProduct();
 $products = $getPro->getProduct();
 //variables que nos permitiran eliminar porducto.
-$deleteProduct = new ActionDeleteProduct();
-$removeProduct = $deleteProduct->DeletProduct();
-
+$deletedProduct = new ActionDeleteProduct();
+$removeProduct = $deletedProduct->DeletProduct();
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +17,7 @@ $removeProduct = $deleteProduct->DeletProduct();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insertar Producto</title>
+    <script src="../src/public/js/ComfDelete.js"></script>
     <link rel="stylesheet" href="./public/css/output.css">
 </head>
 
@@ -95,8 +95,10 @@ $removeProduct = $deleteProduct->DeletProduct();
                         
                         
                         <!--¡¡¡Falta darle fincionalidad a los botones !!!-->
-                        <td class="px-6 py-4"><a href="<?php  ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delite</a>
+                        <td class="px-6 py-4"><a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <a id="delete-button" href="server/controllers/controller.php?action=deleteProduct&id=<?php echo $product['id']; ?>" 
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Delite</a>
                         </td>
 
 

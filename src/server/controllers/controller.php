@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . "/../daos/DatabaseController.php";
 require_once __DIR__ . "/../interfaces/IAction.php";
 require_once __DIR__ . "/../actions/ActionRegister.php";
 require_once __DIR__ . "/../actions/ActionLogin.php";
 require_once __DIR__ . "/../actions/ActionInsertProduct.php";
 require_once __DIR__ . "/../actions/ActionGetProduct.php";
+require_once __DIR__ . "/../actions/ActionDeleteProduct.php";
 
 
 $action = null;
@@ -13,9 +15,11 @@ else
     switch ($_POST["action"]) {
         case 'register':
             $action = new ActionRegister();
+            header('Location: ../../index.php');
             break;
         case 'login':
             $action = new ActionLogin();
+            header('Location: ../../index.php');
             break;
         case 'logout':
             $_SESSION["logged_user"] = null;
@@ -28,6 +32,9 @@ else
         case 'getProduct':
             $action = new ActionGetProduct();
             break;
+        case 'deleteProduct':
+            $action = new ActionDeleteProduct();
+           break;
         default:
             echo "NO existe este usuario";
             break;

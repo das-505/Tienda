@@ -74,6 +74,21 @@ class DatabaseController {
         return $this->connection->lastInsertId();
     }
 
+    public function deleteProduct($table, $id){
+        $query = "DELETE FROM " . $table . " WHERE id = :id";
+        $params = ['id' => $id];
+        $stmt = $this->executeQuery($query, $params);
+
+        if($stmt->rowCount() > 0){
+            
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    
     public function saveImage($name, $price, $description, $imagePath) {
         // Definir los datos para la inserción
         $data = [

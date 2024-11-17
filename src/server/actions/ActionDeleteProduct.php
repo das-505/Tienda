@@ -5,9 +5,18 @@ require_once __DIR__ . "/../controllers/controller.php";
 
 class ActionDeleteProduct{
 
-    function DeletProduct(){
-
+    public function DeletProduct()
+    {
         $db = new DatabaseController();
-        return $db->executeQuery('DELETE FROM products WHERE `products`.`id` = **');
+
+        $deleted = $db->deleteProduct('products', 8);
+
+        if ($deleted) {
+            echo "Producto eliminado con éxito.";
+        } else {
+            echo "No se encontró el producto o no se pudo eliminar.";
+        }
     }
 }
+
+?>
