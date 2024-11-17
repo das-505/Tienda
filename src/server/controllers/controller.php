@@ -3,6 +3,7 @@ require_once __DIR__ . "/../interfaces/IAction.php";
 require_once __DIR__ . "/../actions/ActionRegister.php";
 require_once __DIR__ . "/../actions/ActionLogin.php";
 require_once __DIR__ . "/../actions/ActionInsertProduct.php";
+require_once __DIR__ . "/../actions/ActionGetProduct.php";
 
 
 $action = null;
@@ -23,6 +24,9 @@ else
             break;
         case 'insert_product':
             $action = new ActionInsertProduct();
+            break;
+        case 'getProduct':
+            $action = new ActionGetProduct();
             break;
         default:
             echo "NO existe este usuario";

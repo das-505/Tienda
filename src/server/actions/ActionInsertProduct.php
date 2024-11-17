@@ -14,6 +14,7 @@ class ActionInsertProduct implements IAction
         // Obtener datos del producto desde $post y archivo desde $files
         $name = $post['nameProduct'] ?? null;
         $price = $post['price'] ?? null;
+        $category = $post['category'] ?? null;
         $description = $post['description'] ?? null;
         $file = $_FILES['product_avatar'] ?? null;
 
@@ -34,12 +35,13 @@ class ActionInsertProduct implements IAction
             $data = [
                 'name' => $name,
                 'price' => $price,
+                'category' => $category,
                 'img' => $imagePath,
                 'description' => $description,
             ];
 
             if ($db->insert('products', $data)) {
-                echo "Producto guardado correctamente en la base de datos.";
+                header("Location: ../../admintPanel.php");
             } else {
                 echo "Error al guardar el producto en la base de datos.";
             }
@@ -48,4 +50,4 @@ class ActionInsertProduct implements IAction
         }
     }
 }
-
+?>
