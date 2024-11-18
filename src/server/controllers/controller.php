@@ -33,7 +33,14 @@ else
             $action = new ActionGetProduct();
             break;
         case 'deleteProduct':
-            $action = new ActionDeleteProduct();
+            if (isset($_POST['id'])){
+                $action = new ActionDeleteProduct();
+                $result = $action->DeletProduct($_POST['id']);
+                echo $result ? "Producto Eliminado con exito." : "Error al eliminar el producto.";
+                header("Location: ../../admintPanel.php");
+            }else{
+                echo "ID del producto no especificado";
+            }
            break;
         default:
             echo "NO existe este usuario";

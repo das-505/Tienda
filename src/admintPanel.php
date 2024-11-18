@@ -6,8 +6,6 @@ require_once __DIR__ . "/server/actions/ActionDeleteProduct.php";
 $getPro = new ActionGetProduct();
 $products = $getPro->getProduct();
 //variables que nos permitiran eliminar porducto.
-$deletedProduct = new ActionDeleteProduct();
-$removeProduct = $deletedProduct->DeletProduct();
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +15,6 @@ $removeProduct = $deletedProduct->DeletProduct();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insertar Producto</title>
-    <script src="../src/public/js/ComfDelete.js"></script>
     <link rel="stylesheet" href="./public/css/output.css">
 </head>
 
@@ -37,12 +34,12 @@ $removeProduct = $deletedProduct->DeletProduct();
 
                 <div>
                     <label for="price" class="block text-sm font-semibold text-gray-700 mb-1">Precio</label>
-                    <input type="text" name="price" id="price" placeholder="€0.00" pattern="^\$?\d+(\.\d{1,2})?$" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <input type="text" name="price" id="price" placeholder="€0.00" pattern="^\$?\d+(\.\d{1,9})?$" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div>
-                    <label for="category" class="block text-sm font-semibold text-gray-700 mb-1">Categoria del Producto</label>
-                    <input type="text" name="category" id="category" placeholder="Categoria del producto" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <label for="category" class="block text-sm font-semibold text-gray-700 mb-1">Categoría del Producto</label>
+                    <input type="text" name="category" id="category" placeholder="Categoría del producto" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div>
@@ -67,47 +64,45 @@ $removeProduct = $deletedProduct->DeletProduct();
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Product name</th>
+                        <th scope="col" class="px-6 py-3">Nombre</th>
                         <th scope="col" class="px-6 py-3">ID</th>
-                        <th scope="col" class="px-6 py-3">Category</th>
-                        <th scope="col" class="px-6 py-3">Price</th>
-                        <th scope="col" class="px-6 py-3">Img</th>
+                        <th scope="col" class="px-6 py-3">Categoría</th>
+                        <th scope="col" class="px-6 py-3">Precio</th>
+                        <th scope="col" class="px-6 py-3">Imagen</th>
                         <th scope="col" class="px-6 py-3">Descripción</th>
-                        <th scope="col" class="px-6 py-3">Action</th>
+                        <th scope="col" class="px-6 py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($products as $product): ?>
+                    <?php foreach ($products as $product): ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['name']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['name']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['id']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['category']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['price']); ?></td>
                         <td class="px-6 py-4">
                             <?php if (!empty($product['img'])): ?>
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['img']); ?>" alt="producto" class="w-16 h-16 object-cover" >
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['img']); ?>" alt="producto" class="w-16 h-16 object-cover">
                             <?php else: ?>
                                 Sin Imagen
                             <?php endif; ?>
-                         </td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['description']); ?></td>
-                        
-                        
-                        
-                        <!--¡¡¡Falta darle fincionalidad a los botones !!!-->
-                        <td class="px-6 py-4"><a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a id="delete-button" href="server/controllers/controller.php?action=deleteProduct&id=<?php echo $product['id']; ?>" 
-                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Delite</a>
                         </td>
-
-
-
-
-
-                        
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['description']); ?></td>
+                        <td class="px-6 py-4">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <form action="server/controllers/controller.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="action" value="deleteProduct">
+                                <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                <button 
+                                    type="submit" 
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');"
+                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

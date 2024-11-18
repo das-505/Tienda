@@ -83,12 +83,11 @@ class DatabaseController {
             
             return true;
         }else{
-            return false;
+            return false;   
         }
 
     }
 
-    
     public function saveImage($name, $price, $description, $imagePath) {
         // Definir los datos para la inserción
         $data = [
