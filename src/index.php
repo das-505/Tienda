@@ -68,7 +68,7 @@
               <div class="mt-4 flex justify-between">
                 <div>
                   <h3 class="text-sm text-gray-700">
-                    <a href="#" id="card-text">
+                    <a href="product.php" id="card-text">
                       <span aria-hidden="true" class="absolute inset-0"></span>
                       Pistola Smith & Wesson M&P9 M2.0 metal NTS 4.25
                     </a>
