@@ -75,6 +75,7 @@ if (isset($_SESSION["logged_user"]))
               <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700">Profile</a>
                 <a href="settings.php" class="block px-4 py-2 text-sm text-gray-700">Settings</a>
+          <!--para mostra solo al admint-->            
                 <form action="server/controllers/controller.php" method="POST" class="block w-full text-left">
                   <input type="hidden" name="action" value="logout">
                   <button type="submit" class="w-full px-4 py-2 text-sm text-left text-gray-700">Logout</button>

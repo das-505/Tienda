@@ -100,7 +100,22 @@ class DatabaseController {
         // Llamar al método insert para insertar en la tabla 'products'
         return $this->insert('products', $data);
     }
-    
+
+    //La podemos usar para actualizar tanto profile como product.
+    //para actualizar producto y perfil.
+    public function update($table, $data, $condition){        
+        
+        $setClause = [];
+
+        foreach($data as $key => $value){
+            $setClause[] = "$key = :$key";
+        }
+        $setClauseString = implode(", ", $setClause);
+        $query = "UPDATE $table set $setClauseString WHERE $condition";
+
+        $this->executeQuery($query, $data);
+        return true;
+    }
 
     // Método para cerrar la conexión
     public function close() {

@@ -6,6 +6,9 @@ require_once __DIR__ . "/../actions/ActionLogin.php";
 require_once __DIR__ . "/../actions/ActionInsertProduct.php";
 require_once __DIR__ . "/../actions/ActionGetProduct.php";
 require_once __DIR__ . "/../actions/ActionDeleteProduct.php";
+require_once __DIR__ . "/../actions/ActionUpdateProfile.php";
+require_once __DIR__ . "/../actions/ActionUpdateProduct.php";
+
 
 
 $action = null;
@@ -42,6 +45,15 @@ else
                 echo "ID del producto no especificado";
             }
            break;
+           
+        case 'updateProduct':
+            $action = new ActionUpdateProduct();
+            break;
+
+        case 'updateProfile':
+            $action = new ActionUpdateProfile;
+            break;
+
         default:
             echo "NO existe este usuario";
             break;

@@ -14,7 +14,11 @@ class ActionRegister implements IAction
         $db = new DatabaseController();
 
         $data = array(
+            "name" => $_POST["name"],
+            "surname" => $_POST["surname"],
             "username" => $_POST["username"],
+            "mobilenumber" => $_POST["mobilenumber"],
+            "postcode" => $_POST["postcode"],
             "email" => $_POST["email"],
             "password" => password_hash($_POST["password"], PASSWORD_BCRYPT)
         );

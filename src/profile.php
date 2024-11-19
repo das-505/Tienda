@@ -2,9 +2,9 @@
 require_once __DIR__ . "/server/popos/Users.php";
 
 //inicializacion de la sesion (si no esta inicializada  la inicializamos)
-if (session_start() === PHP_SESSION_NONE)
+if (session_start() === PHP_SESSION_NONE) {
     session_start();
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +18,8 @@ if (session_start() === PHP_SESSION_NONE)
 </head>
 
 <body>
-    
-<!--llamamos a la navbar-->
+
+    <!--llamamos a la navbar-->
     <header>
         <?php
         require_once "./server/parts/navbar.php";
@@ -31,10 +31,10 @@ if (session_start() === PHP_SESSION_NONE)
     <?php
     $loggedUser = null;
     if (isset($_SESSION["logged_user"]))
-    //deserealizamos la variable que almacena al usuario de la sesion
+        //deserealizamos la variable que almacena al usuario de la sesion
         $loggedUser = unserialize($_SESSION["logged_user"]);
 
-        //si no hay usuario logeado redirigimos al usuario al index.
+    //si no hay usuario logeado redirigimos al usuario al index.
     if ($loggedUser == null) {
         header('Location: ../src/index.php');
         exit();
@@ -51,43 +51,58 @@ if (session_start() === PHP_SESSION_NONE)
             </div>
             <!-- Profile Settings Form -->
             <div class="w-full md:w-2/4 ">
-                <h4 class="text-xl font-semibold mb-5">Profile Settings</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="First name">
+                <form action="profile.php" method="POST">
+                    <h4 class="text-xl font-semibold mb-5">Profile Settings</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" name="name" id="name" class="mt-1 block w-full px-3 py-2 border rounded-md"
+                                value="<?php echo htmlspecialchars($loggedUser->getName()); ?>"
+                                placeholder="First name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Surname</label>
+                            <input type="text" name="surname" id="surname" class="mt-1 block w-full px-3 py-2 border rounded-md"
+                                value="<?php echo htmlspecialchars($loggedUser->getSurname()); ?>"
+                                placeholder="Surname">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Surname</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Surname">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 mt-5">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter phone number">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Postcode</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter postcode">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Email ID</label>
-                        <input type="text" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter email ID" value="<?php echo htmlspecialchars($loggedUser->getEmail()); ?>">
-                    </div>
+                    <div class="grid grid-cols-1 gap-4 mt-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                            <input type="text" name="mobilenumber" id="mobilenumber" class="mt-1 block w-full px-3 py-2 border rounded-md"
+                                value="<?php echo htmlspecialchars($loggedUser->getMobilenumber()); ?>"
+                                placeholder="Enter phone number">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Postcode</label>
+                            <input type="text" name="postcode" id="postcode" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter postcode"
+                                value="<?php echo htmlspecialchars($loggedUser->getPostcode()); ?>">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">username</label>
+                            <input type="text" name="username" id="username" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="username"
+                                value="<?php echo htmlspecialchars($loggedUser->getUsername()); ?>">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Email ID</label>
+                            <input type="text" name="email" id="email" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter email ID"
+                                value="<?php echo htmlspecialchars($loggedUser->getEmail()); ?>">
+                        </div>
 
-                </div>
-                <div class="text-center mt-10">
-                    <button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-500 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-700">
-                        Save Profile
-                    </button>
+                    </div>
+                    <div class="text-center mt-10">
+                        <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-500 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-700">
+                            Save Profile
+                        </button>
 
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-<!--llamamos al footer-->
+    <!--llamamos al footer-->
     <footer>
         <?php
         require_once "./server/parts/footer.php";
