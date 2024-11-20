@@ -8,6 +8,7 @@ require_once __DIR__ . "/../actions/ActionGetProduct.php";
 require_once __DIR__ . "/../actions/ActionDeleteProduct.php";
 require_once __DIR__ . "/../actions/ActionUpdateProfile.php";
 require_once __DIR__ . "/../actions/ActionUpdateProduct.php";
+//require_once __DIR__ . "/../actions/ActionAddProductToCart.php";
 
 
 
@@ -36,23 +37,27 @@ else
             $action = new ActionGetProduct();
             break;
         case 'deleteProduct':
-            if (isset($_POST['id'])){
+            if (isset($_POST['id'])) {
                 $action = new ActionDeleteProduct();
                 $result = $action->DeletProduct($_POST['id']);
                 echo $result ? "Producto Eliminado con exito." : "Error al eliminar el producto.";
                 header("Location: ../../admintPanel.php");
-            }else{
+            } else {
                 echo "ID del producto no especificado";
             }
-           break;
-           
+        break;
+
         case 'updateProduct':
             $action = new ActionUpdateProduct();
-            break;
+        break;
 
         case 'updateProfile':
             $action = new ActionUpdateProfile;
-            break;
+        break;
+
+        case 'addToCart':
+            $action = new ActionAddToCart();
+        break;
 
         default:
             echo "NO existe este usuario";
@@ -61,4 +66,3 @@ else
 
 if ($action != null && $action instanceof IAction)
     $action->execute($_POST, $_SESSION, $_FILES);
-?>

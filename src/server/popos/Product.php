@@ -9,9 +9,9 @@ class Product{
 
     
     // ATTRIBUTES
-    protected int $id = -1;
+    protected int $id ;
     protected string $name = "", $description = "";
-    protected float $price = 12.95;
+    protected float $price ;
     protected string $rutaImg;
 
     // Getter para id

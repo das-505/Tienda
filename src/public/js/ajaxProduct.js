@@ -9,7 +9,7 @@ function solicitarCatalogo() {
 
     // Crear la solicitud AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/MEDAC_DAW_ENTORNO_SERVIDOR_2024-2025/Clases/2024-10-29/server/controllers/ajaxController.php', true);
+    xhr.open('POST', 'http://localhost/Tienda/src/server/controllers/ajaxController.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() {
