@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . "/../daos/DatabaseController.php";
-require_once __DIR__ . "/../controllers/controller.php";
 
 class ActionGetProduct{
 

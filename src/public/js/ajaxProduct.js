@@ -1,7 +1,7 @@
 function solicitarCatalogo() {
     // Obtener el valor de búsqueda
     var busquedaElem = document.getElementById("busqueda-producto");
-    var nombre = busquedaElem.value;
+    var nombre = busquedaElem ? busquedaElem.value : '';
 
     // Obtener el contenedor y la tarjeta de ejemplo
     var catalogoContainer = document.getElementById("catalogo-container-row");
@@ -9,7 +9,7 @@ function solicitarCatalogo() {
 
     // Crear la solicitud AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/Tienda/src/server/controllers/ajaxController.php', true);
+    xhr.open('POST', 'http://localhost/MEDAC_DAW_ENTORNO_SERVIDOR_2024-2025/Clases/2024-10-29/server/controllers/ajaxController.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() {
@@ -47,3 +47,8 @@ function solicitarCatalogo() {
     // Enviar la solicitud al servidor con los datos de búsqueda
     xhr.send('busqueda-producto=' + encodeURIComponent(nombre) + '&action=filtroCatalogo');
 }
+
+// Llama a solicitarCatalogo automáticamente al cargar la página
+document.addEventListener("DOMContentLoaded", function() {
+    solicitarCatalogo();
+});

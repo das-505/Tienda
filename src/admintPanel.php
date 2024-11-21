@@ -81,8 +81,8 @@ $products = $getPro->getProduct();
                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['category']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($product['price']); ?></td>
                         <td class="px-6 py-4">
-                            <?php if (!empty($product['img'])): ?>
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['img']); ?>" alt="producto" class="w-16 h-16 object-cover">
+                            <?php if (!empty($product['file_id'])): ?>
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['file_id']); ?>" alt="producto" class="w-16 h-16 object-cover">
                             <?php else: ?>
                                 Sin Imagen
                             <?php endif; ?>

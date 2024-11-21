@@ -32,11 +32,25 @@ class ActionInsertProduct implements IAction
         $imagePath = "/Tienda/src/public/img/" . $file['name'];
 
         if (move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $imagePath)) {
+           //insertar los datos de la imagen en file.
+            $imageData = [
+            'name' => $imageName,
+            'extension' => $imageExtension,
+            'path' => $imagePath
+           ];
+
+           $fileId = $db->insert('file', $imageData);
+           if(!$fileId){
+            echo "Error al guardar los datos del archivo.";
+            return;
+           }
+           
+           //Inserta los datos del producto en la tabla 'product'
             $data = [
                 'name' => $name,
                 'price' => $price,
                 'category' => $category,
-                'img' => $imagePath,
+                'file_id' => $fileId,
                 'description' => $description,
             ];
 
