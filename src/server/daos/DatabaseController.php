@@ -1,18 +1,21 @@
 <?php
 
-class DatabaseController {
+class DatabaseController
+{
     private $host = 'localhost'; // Cambia si es necesario
     private $db_name = 'sistemacatalogo'; // Nombre de tu base de datos
     private $username = 'root'; // Tu usuario de base de datos
     private $password = ''; // Tu contraseña de base de datos
     private $connection;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->connect();
     }
 
     // Método para conectar a la base de datos
-    private function connect() {
+    private function connect()
+    {
         try {
             $this->connection = new PDO("mysql:host={$this->host};dbname={$this->db_name}", $this->username, $this->password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,40 +25,56 @@ class DatabaseController {
     }
 
     // Método para ejecutar una consulta
-    public function executeQuery($query, $params = []) {
+    public function executeQuery($query, $params = [])
+    {
         $stmt = $this->connection->prepare($query);
         $stmt->execute($params);
         return $stmt;
     }
 
     // Método para obtener todos los registros de una tabla
-    public function getAll($table) {
-        $query = "SELECT * FROM " . $table;
+    public function getAll($table){
+
+        if ($table === 'products') {
+            // Realiza un JOIN con la tabla 'file' para obtener la ruta de la imagen
+            $query = "
+                SELECT p.*, 
+                    f.path AS image_path 
+                FROM products p
+                LEFT JOIN file f ON p.file_id = f.id
+            ";
+        } else {
+
+            $query = "SELECT * FROM " . $table;
+        }
+
         $stmt = $this->executeQuery($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByData($table, $data = []) {
+    public function getByData($table, $data = [])
+    {
         $query = "SELECT * FROM " . $table;
 
-        if(count($data) > 0){
+        if (count($data) > 0) {
             $query .= " WHERE ";
             $flag = true;
-            foreach($data as $key => $value){
-                if($flag)
+            foreach ($data as $key => $value) {
+                if ($flag)
                     $flag = false;
-                else 
+                else
                     $query .= " AND ";
-            
+
                 $query .= " $key = '$value' ";
             }
-        }    
+        }
         $stmt = $this->executeQuery($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Método para obtener un registro por ID
-    public function getById($table, $id) {
+    public function getById($table, $id)
+    {
         $query = "SELECT * FROM " . $table . " WHERE id = '$id'";
         $stmt = $this->connection->prepare($query);
         $stmt = $this->executeQuery($query);
@@ -63,10 +82,11 @@ class DatabaseController {
     }
 
     // Método para insertar un registro
-    public function insert($table, $data) {
-        
+    public function insert($table, $data)
+    {
+
         // $query_sample = "INSERT INTO users (username, email, password) VALUES ('saurasmaker', 'saurasmaker@gmail.com', '1234a')"
-        
+
         $columns = implode(", ", array_keys($data));
         $placeholders = ":" . implode(", :", array_keys($data));
         $query = "INSERT INTO " . $table . " ($columns) VALUES ($placeholders)";
@@ -74,21 +94,22 @@ class DatabaseController {
         return $this->connection->lastInsertId();
     }
 
-    public function deleteProduct($table, $id){
+    public function deleteProduct($table, $id)
+    {
         $query = "DELETE FROM " . $table . " WHERE id = :id";
         $params = ['id' => $id];
         $stmt = $this->executeQuery($query, $params);
 
-        if($stmt->rowCount() > 0){
-            
-            return true;
-        }else{
-            return false;   
-        }
+        if ($stmt->rowCount() > 0) {
 
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function saveImage($name, $price, $description, $imagePath) {
+    public function saveImage($name, $price, $description, $imagePath)
+    {
         // Definir los datos para la inserción
         $data = [
             'name' => $name,
@@ -96,18 +117,19 @@ class DatabaseController {
             'img' => $imagePath,
             'description' => $description
         ];
-    
+
         // Llamar al método insert para insertar en la tabla 'products'
         return $this->insert('products', $data);
     }
 
     //La podemos usar para actualizar tanto profile como product.
     //para actualizar producto y perfil.
-    public function update($table, $data, $condition){        
-        
+    public function update($table, $data, $condition)
+    {
+
         $setClause = [];
 
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $setClause[] = "$key = :$key";
         }
         $setClauseString = implode(", ", $setClause);
@@ -118,9 +140,8 @@ class DatabaseController {
     }
 
     // Método para cerrar la conexión
-    public function close() {
+    public function close()
+    {
         $this->connection = null;
     }
 }
-
-?>

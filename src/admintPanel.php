@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . "/server/actions/ActionGetProduct.php";
 require_once __DIR__ . "/server/actions/ActionDeleteProduct.php";
 
@@ -20,7 +20,11 @@ $products = $getPro->getProduct();
 
 <body class="bg-gray-900 min-h-screen flex items-start justify-between p-6">
     <!-- Contenedor para organizar el formulario y la tabla -->
-    <div class="flex flex-row gap-6 w-full"> 
+    <div class="flex flex-row gap-6 w-full">
+
+        <?php
+        require_once "./server/parts/navbar.php";
+        ?>
         <!-- Formulario -->
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Insertar Nuevo Producto</h1>
@@ -75,33 +79,33 @@ $products = $getPro->getProduct();
                 </thead>
                 <tbody>
                     <?php foreach ($products as $product): ?>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['name']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['id']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['category']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['price']); ?></td>
-                        <td class="px-6 py-4">
-                            <?php if (!empty($product['file_id'])): ?>
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['file_id']); ?>" alt="producto" class="w-16 h-16 object-cover">
-                            <?php else: ?>
-                                Sin Imagen
-                            <?php endif; ?>
-                        </td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($product['description']); ?></td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <form action="server/controllers/controller.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="action" value="deleteProduct">
-                                <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-                                <button 
-                                    type="submit" 
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($product['name']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($product['id']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($product['category']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($product['price']); ?></td>
+                            <td class="px-6 py-4">
+                                <?php if (!empty($product['image_path'])): ?>
+                                    <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="producto" class="w-16 h-16 object-cover">
+                                <?php else: ?>
+                                    Sin Imagen
+                                <?php endif; ?>
+                            </td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($product['description']); ?></td>
+                            <td class="px-6 py-4">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <form action="server/controllers/controller.php" method="POST" style="display:inline;">
+                                    <input type="hidden" name="action" value="deleteProduct">
+                                    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');"
+                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>

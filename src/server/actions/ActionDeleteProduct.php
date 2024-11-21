@@ -7,7 +7,17 @@ class ActionDeleteProduct{
     public function DeletProduct($id){
 
         $db = new DatabaseController();
-        return $db->deleteProduct('products', $id);
+
+        $product = $db->getById('products', $id);
+        $fileId = $product['file_id'] ?? null;
+
+        $deleted = $db->deleteProduct('products', $id);
+
+        if($deleted && $fileId){
+            $db->deleteProduct('file', $fileId);
+        }
+
+        return $deleted;
     }
 }
 
