@@ -9,4 +9,4 @@ class ActionGetProduct{
         $db = new DatabaseController();
         return $db->getAll('products');
     }
-}
+}               

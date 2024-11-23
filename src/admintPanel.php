@@ -21,10 +21,6 @@ $products = $getPro->getProduct();
 <body class="bg-gray-900 min-h-screen flex items-start justify-between p-6">
     <!-- Contenedor para organizar el formulario y la tabla -->
     <div class="flex flex-row gap-6 w-full">
-
-        <?php
-        require_once "./server/parts/navbar.php";
-        ?>
         <!-- Formulario -->
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Insertar Nuevo Producto</h1>

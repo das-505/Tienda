@@ -1,54 +1,52 @@
-function solicitarCatalogo() {
-    // Obtener el valor de búsqueda
-    var busquedaElem = document.getElementById("busqueda-producto");
-    var nombre = busquedaElem ? busquedaElem.value : '';
+async function solicitarCatalogo() {
 
-    // Obtener el contenedor y la tarjeta de ejemplo
-    var catalogoContainer = document.getElementById("catalogo-container-row");
-    var cardEjemplo = document.querySelector(".group.relative");
+    try{
 
-    // Crear la solicitud AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/MEDAC_DAW_ENTORNO_SERVIDOR_2024-2025/Clases/2024-10-29/server/controllers/ajaxController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        const response = await fetch('/Tienda/src/server/controllers/ajaxController.php');
+        if (!response.ok) throw new Error('Error al obtener el catalogo de productos.');
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // Limpiar el contenedor antes de agregar nuevos resultados
-            catalogoContainer.innerHTML = '';
+        const productos = await response.json();
 
-            // Parsear la respuesta JSON
-            var respuesta = JSON.parse(xhr.responseText);
-            
-            // Iterar sobre cada producto en la respuesta
-            respuesta.forEach(producto => {
-                // Clonar la tarjeta de ejemplo
-                var nuevaCard = cardEjemplo.cloneNode(true);
+        mostrarCatalogo(productos);
+    }catch(error){
+        console.error('Error:', error);
+    }
 
-                // Actualizar la imagen
-                var imagen = nuevaCard.querySelector("img");
-                imagen.src = producto.imagen; // Asegúrate de que la URL de imagen esté en los datos del producto
-                
-                // Actualizar el título del producto
-                var titulo = nuevaCard.querySelector(".text-sm.text-gray-700 a");
-                titulo.innerText = producto.nombre;
-                titulo.href = "product.php?product_id=" + producto.id; // Enlace a la página de producto
-
-                // Actualizar el precio del producto
-                var precio = nuevaCard.querySelector(".text-sm.text-gray-500");
-                precio.innerText = "€" + producto.precio;
-
-                // Agregar la tarjeta clonada al contenedor del catálogo
-                catalogoContainer.appendChild(nuevaCard);
-            });
-        }
-    };
-
-    // Enviar la solicitud al servidor con los datos de búsqueda
-    xhr.send('busqueda-producto=' + encodeURIComponent(nombre) + '&action=filtroCatalogo');
 }
 
-// Llama a solicitarCatalogo automáticamente al cargar la página
-document.addEventListener("DOMContentLoaded", function() {
+function mostrarCatalogo(productos){
+    const catalogoContainer = document.getElementById('catalogo-container');
+
+    catalogoContainer.innerHTML = '';
+
+    productos.forEach(producto => {
+        const card = document.createElement('div');
+        card.classList.add('group', 'relative');
+
+        card.innerHTML = `
+             <div class="aspect-h-1 aspect-w-1 w-full rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <img src="${producto.image_path}" alt="${producto.name}" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="product.php?id=${producto.id}">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            ${producto.name}
+                        </a>
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">${producto.category}</p>
+                </div>
+                <p class="text-sm font-medium text-gray-900">€${producto.price}</p>
+            </div>        
+        `;
+
+        catalogoContainer.appendChild(card);
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', () =>{
+
     solicitarCatalogo();
 });
