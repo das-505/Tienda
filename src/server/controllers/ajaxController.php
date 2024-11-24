@@ -1,13 +1,22 @@
 <?php
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../actions/ActionGetProduct.php'; // Asegúrate de que la ruta sea correcta
+require_once __DIR__ . '/../actions/ActionGetProduct.php';
 
 try {
     $action = new ActionGetProduct();
-    $productos = $action->getProduct();
+    
+    // Obtener la categoría de los parámetros de la solicitud (si existe)
+    $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : null;
 
-    $response = [];
+    // Si se pasa una categoría, filtrar, de lo contrario, obtener todos los productos
+    if ($categoria) {
+        $productos = $action->getProductByCategory($categoria);
+    } else {
+        $productos = $action->getProduct();
+    }
+
+    
     foreach ($productos as $producto) {
         $response[] = [
             'id' => $producto['id'],
@@ -19,7 +28,8 @@ try {
     }
 
     echo json_encode($response);
+
 } catch (Exception $e) {
-    http_response_code(500); // Envía un código de error 500 en caso de fallo
+    http_response_code(500); // Responder con error 500 en caso de fallo
     echo json_encode(['error' => $e->getMessage()]);
 }

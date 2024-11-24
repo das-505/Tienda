@@ -27,31 +27,22 @@
     <main class="flex-grow">
 
       <!--para filtrar-->
-      <div class="container mx-auto mt-10 px-4">
-        <h1 class="text-center text-3xl font-bold text-gray-800">Buscar Productos</h1>
-        <form class="mt-6" method="POST" onsubmit="solicitarCatalogo(); return false;">
-          <div class="flex flex-col sm:flex-row items-center justify-center">
-            <div class="w-full sm:w-auto mb-4 sm:mb-0">
-              <input
-                type="text"
-                class="w-full sm:w-auto border border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="busqueda-producto"
-                placeholder="Escribe el nombre del producto"
-                required>
-            </div>
-            <div class="w-full sm:w-auto sm:ml-4">
-              <button
-                type="submit"
-                class="w-full sm:w-auto bg-blue-600 text-white font-semibold rounded-lg py-2 px-4 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                Buscar
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <div class="container mx-auto mt-6 px-4">
+    <select id="category-filter" class="border border-gray-300 rounded-lg py-2 px-4 text-gray-700">
+        <option value="">Todas las categorías</option>
+        <option value="rifles">Rifles</option>
+        <option value="Pistolas">Pistolas</option>
+        <option value="Escopetas">Escopeta</option>
+        <option value="Carabinas">Carabinas</option>
+        <option value="Cuchillo">Cuchillería</option>
+        <option value="Fundas">Fundas</option>
+        
+    </select>
+</div>
+
 
       <div id="catalogo-container" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        <!-- Aquí se agregarán las tarjetas dinámicamente -->
+        <!-- Aquí se agregarán las tarjetas -->
       </div>
 
     </main>
