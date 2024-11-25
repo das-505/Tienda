@@ -33,8 +33,7 @@ class DatabaseController
     }
 
     // Método para obtener todos los registros de una tabla
-    public function getAll($table)
-    {
+    public function getAll($table){
 
         if ($table === 'products') {
             // Realiza un JOIN con la tabla 'file' para obtener la ruta de la imagen
@@ -54,7 +53,7 @@ class DatabaseController
     }
 
     public function getByData($table, $data = []){        
-        
+
         $query = "SELECT * FROM " . $table;
 
         if (count($data) > 0) {
@@ -85,7 +84,18 @@ class DatabaseController
             WHERE p.id = :id
         ";
             $params = ['id' => $id];
-        }else{
+        }elseif($table === 'users'){
+            $query = "
+            SELECT p.*, 
+                   f.path AS image_path 
+            FROM users p
+            LEFT JOIN file f ON p.file_id = f.id
+            WHERE p.id = :id
+        ";
+            $params = ['id' => $id];
+        }
+        
+        else{
 
             $query = "SELECT * FROM " . $table . " WHERE id = '$id'";
             $params = ['id'=> $id];
@@ -94,6 +104,8 @@ class DatabaseController
         $stmt = $this->executeQuery($query, $params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    
 
     // Método para insertar un registro
     public function insert($table, $data)

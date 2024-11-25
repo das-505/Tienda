@@ -2,10 +2,23 @@
 require_once __DIR__ . "/server/actions/ActionGetProduct.php";
 require_once __DIR__ . "/server/actions/ActionDeleteProduct.php";
 
-//variables que nos permitiran mostrar los productos de la base de datos.
+session_start();
+
+if(!isset($_SESSION["logged_user"])){
+    header("Location: login.php");
+    exit;
+}
+
+$loggedUser = unserialize($_SESSION["logged_user"]);
+
+if(!$loggedUser instanceof Admin || !$loggedUser->isAdmin){
+    echo "Access Denied!";
+    exit;
+}
+
+// Variables que nos permitirán mostrar los productos de la base de datos.
 $getPro = new ActionGetProduct();
 $products = $getPro->getProduct();
-//variables que nos permitiran eliminar porducto.
 ?>
 
 <!DOCTYPE html>
@@ -18,48 +31,64 @@ $products = $getPro->getProduct();
     <link rel="stylesheet" href="./public/css/output.css">
 </head>
 
-<body class="bg-gray-900 min-h-screen flex items-start justify-between p-6">
-    <!-- Contenedor para organizar el formulario y la tabla -->
-    <div class="flex flex-row gap-6 w-full">
+<body class="bg-gray-900 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white py-4">
+        <?php require_once "./server/parts/navbar.php"; ?>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="flex flex-col lg:flex-row gap-6 px-6 py-8 w-full flex-grow">
         <!-- Formulario -->
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <section class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-auto lg:mx-0">
             <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Insertar Nuevo Producto</h1>
 
             <form action="server/controllers/controller.php" method="POST" enctype="multipart/form-data" class="space-y-6">
                 <input type="hidden" name="action" value="insert_product">
+
                 <div>
                     <label for="nameProduct" class="block text-sm font-semibold text-gray-700 mb-1">Nombre del Producto</label>
-                    <input type="text" name="nameProduct" id="nameProduct" placeholder="Nombre del producto" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <input type="text" name="nameProduct" id="nameProduct" placeholder="Nombre del producto"
+                        class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div>
                     <label for="price" class="block text-sm font-semibold text-gray-700 mb-1">Precio</label>
-                    <input type="text" name="price" id="price" placeholder="€0.00" pattern="^\$?\d+(\.\d{1,9})?$" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <input type="text" name="price" id="price" placeholder="€0.00"
+                        pattern="^\$?\d+(\.\d{1,9})?$"
+                        class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div>
                     <label for="category" class="block text-sm font-semibold text-gray-700 mb-1">Categoría del Producto</label>
-                    <input type="text" name="category" id="category" placeholder="Categoría del producto" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <input type="text" name="category" id="category" placeholder="Categoría del producto"
+                        class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div>
                     <label for="description" class="block text-sm font-semibold text-gray-700 mb-1">Descripción</label>
-                    <textarea id="description" name="description" placeholder="Describe el producto" class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"></textarea>
+                    <textarea id="description" name="description" placeholder="Describe el producto"
+                        class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"></textarea>
                 </div>
 
                 <div>
                     <label for="product_avatar" class="block text-sm font-semibold text-gray-700 mb-1">Imagen del Producto</label>
-                    <input type="file" name="product_avatar" id="product_avatar" class="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                    <input type="file" name="product_avatar" id="product_avatar"
+                        class="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
                 </div>
 
                 <div class="flex justify-center">
-                    <button type="submit" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">Guardar Producto</button>
+                    <button type="submit"
+                        class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+                        Guardar Producto
+                    </button>
                 </div>
             </form>
-        </div>
+        </section>
 
         <!-- Tabla -->
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-gray-900 p-4 w-full">
+        <section class="relative overflow-x-auto shadow-md sm:rounded-lg bg-gray-900 p-4 w-full">
             <h1 class="text-2xl font-bold text-center text-white mb-6">Productos disponibles</h1>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -105,8 +134,16 @@ $products = $getPro->getProduct();
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <!-- Botón Admin Users -->
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <?php require_once "./server/parts/footer.php"; ?>
+    </footer>
+
 </body>
 
 </html>

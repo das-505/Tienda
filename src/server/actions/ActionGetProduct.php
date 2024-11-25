@@ -15,6 +15,10 @@ class ActionGetProduct {
         return $this->db->getAll('products'); 
     }
 
+    public function getUsers() {
+        return $this->db->getAll('users'); 
+    }
+
     public function getProductById($id){
         return $this->db->getById('products', $id);
     }

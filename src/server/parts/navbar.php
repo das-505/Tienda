@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../popos/users.php";
+require_once __DIR__ . "/../popos/Admin.php";
 
 if (session_status() === PHP_SESSION_NONE)
   session_start();
@@ -38,12 +39,14 @@ if (isset($_SESSION["logged_user"]))
       <!-- Iconos y Menú de Usuario -->
       <div class="absolute inset-y-0 right-0 flex items-center space-x-4 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Carrito de compras -->
+          
+          <a href="shoppingCart.php">
         <button id="shopping-card-button" type="button" class="relative rounded-full p-2 bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition">
           <span class="sr-only">Shopping basket</span>
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13l-1.5 5.5m11-5.5L16.5 18.5M7 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0m10 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0" />
-          </svg>
-        </button>
+          </svg> 
+          </button></a>
 
         <!-- Menú de usuario -->
         <?php if ($loggedUser != null) { ?>
@@ -57,6 +60,9 @@ if (isset($_SESSION["logged_user"]))
             <!-- Menú desplegable -->
             <div id="user-dropdown-menu" class="hidden absolute right-0 z-20 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
               <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+              <?php if($loggedUser instanceof Admin && $loggedUser->isAdmin) {?>
+                <a href="admintPanel.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">AdmintPanel</a>
+              <?php } ?>
               <a href="settings.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
               <form action="server/controllers/controller.php" method="POST">
                 <input type="hidden" name="action" value="logout">

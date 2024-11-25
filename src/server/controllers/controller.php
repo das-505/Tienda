@@ -45,19 +45,28 @@ else
             } else {
                 echo "ID del producto no especificado";
             }
-        break;
-
+            break;
+        case 'deleteUser':
+            if (isset($_POST['id'])) {
+                $action = new ActionDeleteProduct();
+                $result = $action->DeletUser($_POST['id']);
+                echo $result ? "Usuario Eliminado con exito." : "Error al eliminar el user.";
+                header("Location: ../../adminUser.php");
+            } else {
+                echo "ID del user no especificado";
+            }
+            break;
         case 'updateProduct':
             $action = new ActionUpdateProduct();
-        break;
+            break;
 
         case 'updateProfile':
             $action = new ActionUpdateProfile;
-        break;
+            break;
 
         case 'addToCart':
             $action = new ActionAddToCart();
-        break;
+            break;
 
         default:
             echo "NO existe este usuario";

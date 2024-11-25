@@ -106,7 +106,7 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
                   <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1 13H4L3 3zm1 16h16m-8-8v8" />
                   </svg>
-                  Comprar
+                  Add to Cart
                 </button>
               </div>
             </div>

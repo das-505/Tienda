@@ -19,6 +19,24 @@ class ActionDeleteProduct{
 
         return $deleted;
     }
+
+    public function DeletUser($id){
+
+        $db = new DatabaseController();
+
+        $user = $db->getById('users', $id);
+        $fileId = $user['file_id'] ?? null;
+
+        $deleted = $db->deleteProduct('users', $id);
+
+        if($deleted && $fileId){
+            $db->deleteProduct('file', $fileId);
+        }
+
+        return $deleted;
+    }
+
+    
 }
 
 ?>
