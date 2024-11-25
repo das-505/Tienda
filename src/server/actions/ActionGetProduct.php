@@ -15,12 +15,18 @@ class ActionGetProduct {
         return $this->db->getAll('products'); 
     }
 
+    public function getProductById($id){
+        return $this->db->getById('products', $id);
+    }
+    
+    
     // Obtener productos filtrados por categoría
     public function getProductByCategory($category) {
         // Filtrar por la categoría usando `getByData`
         $filters = ['category' => $category];
         return $this->db->getByData('products', $filters);
     }
+
 }
 
 ?>

@@ -16,6 +16,7 @@ try {
         $productos = $action->getProduct();
     }
 
+    $response = [];
     
     foreach ($productos as $producto) {
         $response[] = [
@@ -23,7 +24,7 @@ try {
             'name' => $producto['name'],
             'category' => $producto['category'],
             'price' => $producto['price'],
-            'image_path' => !empty($producto['image_path']) ? $producto['image_path'] : 'sin_image.jpg',
+            'image_path' => !empty($producto['image_path']) ? $producto['image_path'] : '/Tienda/src/public/img/cuchillo-de-monte-hoja-curva-madera.jpg',
         ];
     }
 
