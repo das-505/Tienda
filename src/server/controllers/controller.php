@@ -19,8 +19,7 @@ else
     switch ($_POST["action"]) {
         case 'register':
             $action = new ActionRegister();
-            echo (['success' => 'Usuario Registrado']);
-            header('Location: ../../login.php');
+            echo (['success' => 'Usuario Registrado']);           
             break;
         case 'login':
             $action = new ActionLogin();

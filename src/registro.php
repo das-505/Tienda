@@ -42,7 +42,7 @@ session_start();
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
                             Name
                         </label>
-                        <input type="text" placeholder="name..." name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" placeholder="name..." name="name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
                     <div class="mb-4">
@@ -56,7 +56,7 @@ session_start();
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                             Username
                         </label>
-                        <input type="text" placeholder="username..." name="username" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" placeholder="username..." name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
                     

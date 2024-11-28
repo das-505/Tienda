@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once __DIR__ . "/../popos/users.php";
 require_once __DIR__ . "/../popos/Admin.php";
 
@@ -31,8 +31,9 @@ if (isset($_SESSION["logged_user"]))
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <a href="index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition">Home</a>
-            <?php if ($loggedUser !== null) { ?>
-              <a href="admintPanel.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-indigo-500 hover:text-white transition">Admin Panel</a>
+            <!-- Mostrar Admin Panel solo si el usuario es administrador -->
+            <?php if ($loggedUser instanceof Admin && $loggedUser->isAdmin) { ?>
+              <a href="adminPanel.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-indigo-500 hover:text-white transition">Admin Panel</a>
             <?php } ?>
           </div>
         </div>
@@ -48,9 +49,7 @@ if (isset($_SESSION["logged_user"]))
           </svg>
           <span name="cart-count" id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">0</span>
         </a>
-                <div id="cart-count" name="cart-count">
-
-                </div>
+        
         <!-- Menú de usuario -->
         <?php if ($loggedUser != null) { ?>
           <div class="relative">
@@ -64,7 +63,7 @@ if (isset($_SESSION["logged_user"]))
             <div id="user-dropdown-menu" class="hidden absolute right-0 z-20 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
               <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
               <?php if ($loggedUser instanceof Admin && $loggedUser->isAdmin) { ?>
-                <a href="admintPanel.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">AdmintPanel</a>
+                <a href="admintPanel.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Panel</a>
               <?php } ?>
               <form action="server/controllers/controller.php" method="POST">
                 <input type="hidden" name="action" value="logout">
@@ -80,7 +79,6 @@ if (isset($_SESSION["logged_user"]))
     </div>
   </div>
 </nav>
-
 
 <!--Para el panel de usuario-->
 <script>

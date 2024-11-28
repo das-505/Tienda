@@ -6,80 +6,89 @@ class User{
 
     // ATTRIBUTES
     protected string $name, $username, $email, $password, $surname, $mobilenumber, $postcode;
-    private DateTime $birthdate;
-
+    
+    public function __construct(
+        string $username = "",
+        string $email = "",
+        string $name = "",
+        string $surname = "",
+        string $mobilenumber = "",
+        string $postcode = "",
+        string $password = ""
+    ){
+     $this->username = $username;
+     $this->email = $email;
+     $this->name = $name;
+     $this->surname = $surname;
+     $this->mobilenumber = $mobilenumber;
+     $this->postcode = $postcode;
+     $this->password = $password;     
+    }
 
     // Getters
-    function getSurname(){
+    function getSurname(): string{
         return $this->surname;
     }
 
-    function getMobilenumber(){
+    function getMobilenumber(): string{
         return $this->mobilenumber;
     }
 
-    function getPostcode(){
+    function getPostcode(): string{
         return $this->postcode;
     }
 
-    function getUsername(){
+    function getUsername(): string{
         return $this->username;
     }
     
-    function getEmail(){
+    function getEmail(): string{
         return $this->email;
     }
 
-    function getName(){
+    function getName(): string{
         return $this->name;
     }
 
-    function getPassword(){
+    function getPassword(): string{
         return $this->password;
-    }
-
-    function getBirthdate() : DateTime{
-        return $this->birthdate;
     }
 
     //Setters
 
-    function setSurname($surname){
+    function setSurname($surname): void{
         $this->surname = $surname;
     }
 
-    function setMobilenumber($mobilenumber){
+    function setMobilenumber($mobilenumber): void{
         $this->mobilenumber = $mobilenumber;
     }
 
-    function setPostcode($postcode){
+    function setPostcode($postcode): void{
         $this->postcode = $postcode;
     }
 
-    function setUsername($username){
+    function setUsername($username): void{
         $this->username = $username;
     }
 
 
-    function setEmail($email){
+    function setEmail($email): void{
         $this->email = $email;
     }
 
 
-    function setName($name){
+    function setName($name): void{
         $this->name = $name;
     }
 
 
     
-    function setPassword($password){
+    function setPassword($password): void{
         $this->password = $password;
     }
 
 
-    function setBirthdate(DateTime $birthdate){
-        $this->birthdate = $birthdate;
-    }
 
 
     public function jsonSerialize() {

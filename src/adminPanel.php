@@ -4,17 +4,19 @@ require_once __DIR__ . "/server/actions/ActionDeleteProduct.php";
 
 session_start();
 
-if(!isset($_SESSION["logged_user"])){
+if (!isset($_SESSION["logged_user"])) {
     header("Location: login.php");
     exit;
 }
 
 $loggedUser = unserialize($_SESSION["logged_user"]);
 
+if (!($loggedUser instanceof Admin) || !$loggedUser->isAdmin)
 
 
-// Variables que nos permitirán mostrar los productos de la base de datos.
-$getPro = new ActionGetProduct();
+
+    // Variables que nos permitirán mostrar los productos de la base de datos.
+    $getPro = new ActionGetProduct();
 $products = $getPro->getProduct();
 ?>
 
@@ -135,7 +137,14 @@ $products = $getPro->getProduct();
     </main>
 
     <!-- Botón Admin Users -->
-    
+    <a href="adminUser.php">
+        <button type="submit"
+            class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+            Admin User
+        </button>
+    </a>
+
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">
         <?php require_once "./server/parts/footer.php"; ?>

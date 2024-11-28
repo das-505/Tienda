@@ -61,7 +61,7 @@ if (session_start() === PHP_SESSION_NONE) {
                                 placeholder="First name">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Surname</label>
+                            <label class="block text-sm font-medium text-gray-700">Last name</label>
                             <input type="text" name="surname" id="surname" class="mt-1 block w-full px-3 py-2 border rounded-md"
                                 value="<?php echo htmlspecialchars($loggedUser->getSurname()); ?>"
                                 placeholder="Surname">

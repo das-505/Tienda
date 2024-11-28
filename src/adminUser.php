@@ -50,6 +50,13 @@ $getUsers = $getUser->getUsers();
     </tbody>
 </table>
 
+<a href="adminPanel.php">
+        <button type="submit"
+            class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+            Admin User
+        </button>
+    </a>
+
 <footer class="bg-gray-800 text-white text-center py-4">
     <?php require_once "./server/parts/footer.php"; ?>
 </footer>
