@@ -8,7 +8,7 @@ require_once __DIR__ . "/../actions/ActionGetProduct.php";
 require_once __DIR__ . "/../actions/ActionDeleteProduct.php";
 require_once __DIR__ . "/../actions/ActionUpdateProfile.php";
 require_once __DIR__ . "/../actions/ActionUpdateProduct.php";
-//require_once __DIR__ . "/../actions/ActionAddProductToCart.php";
+require_once __DIR__ . "/../actions/ActionAddToCart.php";
 
 
 
@@ -19,11 +19,11 @@ else
     switch ($_POST["action"]) {
         case 'register':
             $action = new ActionRegister();
-            header('Location: ../../index.php');
+            echo (['success' => 'Usuario Registrado']);
+            header('Location: ../../login.php');
             break;
         case 'login':
             $action = new ActionLogin();
-            header('Location: ../../index.php');
             break;
         case 'logout':
             $_SESSION["logged_user"] = null;
@@ -64,8 +64,8 @@ else
             $action = new ActionUpdateProfile;
             break;
 
-        case 'addToCart':
-            $action = new ActionAddToCart();
+         case 'addToCart':
+      //      $action = new ActionAddToCart();
             break;
 
         default:

@@ -34,7 +34,7 @@
         <option value="Pistolas">Pistolas</option>
         <option value="Escopetas">Escopeta</option>
         <option value="Carabinas">Carabinas</option>
-        <option value="Cuchillo">Cuchillería</option>
+        <option value="Cuchillos">Cuchillos</option>
         <option value="Fundas">Fundas</option>
         
     </select>

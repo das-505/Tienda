@@ -1,3 +1,6 @@
+/*Ajax para mostrar mostrar y clonar 
+los porductos de la base de datos
+*/
 async function solicitarCatalogo(categoria = null) {
     try {
         // Construir la URL con o sin el parámetro de categoría

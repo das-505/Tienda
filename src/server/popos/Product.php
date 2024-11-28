@@ -31,7 +31,7 @@ class Product{
     }
 
     // Setter para price
-    public function setPrice(int $price): void {
+    public function setPrice(float $price): void {
         $this->price = $price;
     }
 

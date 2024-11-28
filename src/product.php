@@ -2,6 +2,7 @@
 require_once __DIR__ . "/server/popos/Product.php";
 require_once __DIR__ . "/server/actions/ActionGetProduct.php";
 
+
 $productToShow = null;
 $productAction = new ActionGetProduct();
 
@@ -42,7 +43,9 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Producto - <?php echo $productToShow->getName(); ?> </title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./public/css/output.css">
+  <script src="server/actions/ActionAddToCart.php" defer></script>
+  <script src="public/js/ajaxAddToCart.js" defer></script>
   <style>
     /* Animación suave para el cambio de imagen */
     #mainImage {
@@ -75,7 +78,7 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
           <!-- Imágenes del producto -->
           <div class="flex flex-col items-center">
             <!-- Imagen principal -->
-            <img id="mainImage" src="<?php echo $productToShow->getImage(); ?>" alt="Rifle Mossberg Patriot" class="w-full h-auto mb-4 rounded-lg shadow-lg">          
+            <img id="mainImage" src="<?php echo $productToShow->getImage(); ?>" alt="Rifle Mossberg Patriot" class="w-full h-auto mb-4 rounded-lg shadow-lg">
           </div>
 
           <!-- Descripción del producto -->
@@ -87,7 +90,7 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
 
               <!-- Descripción -->
               <p class="text-gray-700 text-lg leading-relaxed mb-6">
-              <?php echo $productToShow->getDescription(); ?>  
+                <?php echo $productToShow->getDescription(); ?>
               </p>
               <p class="font-semibold text-gray-800 text-lg mb-4">Condiciones de compra: +25</p>
               <ul class="list-disc list-inside text-gray-700 text-lg space-y-2">
@@ -96,19 +99,24 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
               </ul>
             </div>
 
-            <!-- Precio y botón de acción -->
+            <!-- Precio y botón de compra -->
             <div class="mt-6 border-t-2 border-gray-200 pt-4">
               <p class="text-2xl font-bold text-red-500 line-through"> <?php echo number_format($discountedPrice, 2); ?> €</p>
               <p class="text-4xl font-bold text-gray-800 mb-4"><?php echo number_format($productToShow->getPrice(), 2); ?> €</p>
+
               <div class="flex items-center space-x-4">
                 <input type="number" value="1" min="1" class="w-16 text-center border border-gray-300 rounded-md shadow-md">
-                <button class="flex-grow bg-blue-600 text-white text-lg font-semibold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition flex items-center justify-center">
+
+                <button onclick="addToCart(<?php echo $productToShow->getId(); ?>, '<?php echo $productToShow->getName(); ?>', <?php echo $productToShow->getPrice(); ?>)"  class="flex-grow bg-blue-600 text-white text-lg font-semibold
+                 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition flex items-center justify-center">
                   <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1 13H4L3 3zm1 16h16m-8-8v8" />
                   </svg>
                   Add to Cart
                 </button>
+
               </div>
+
             </div>
           </div>
         </div>
@@ -124,12 +132,16 @@ $discountedPrice = $productToShow->getPrice() * (2 - $discountPercentage / 100);
     </footer>
   </div>
 
+
+
   <!-- Script para cambiar de imagen -->
   <script>
     function changeImage(src) {
       document.getElementById('mainImage').src = src;
     }
   </script>
+
+
 </body>
 
 </html>

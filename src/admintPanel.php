@@ -11,10 +11,7 @@ if(!isset($_SESSION["logged_user"])){
 
 $loggedUser = unserialize($_SESSION["logged_user"]);
 
-if(!$loggedUser instanceof Admin || !$loggedUser->isAdmin){
-    echo "Access Denied!";
-    exit;
-}
+
 
 // Variables que nos permitirán mostrar los productos de la base de datos.
 $getPro = new ActionGetProduct();

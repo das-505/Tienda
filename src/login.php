@@ -1,9 +1,12 @@
 <?php
 
+require_once __DIR__ . "/server/tools/cookie.php";
 require_once __DIR__ . "/server/popos/Users.php";
 require_once __DIR__ . "/server/daos/DatabaseController.php";
 
 session_start();
+
+$userData = Cookie::getCookie("logged_user");
 
 $tablename = "users";
 $db = new DatabaseController();
@@ -47,7 +50,7 @@ $db->close();
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
             <div class="mt-2">
-              <input id="email" name="email" type="email" autocomplete="Email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input id="email" name="email" type="email" autocomplete="email" value="<?= isset ($userData['username']) ? htmlspecialchars($userData['username']) : '' ?>" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
 
@@ -61,7 +64,7 @@ $db->close();
           </div>
 
           <div>
-            <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+            <button name="sign-in" type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
           </div>
         </form>
 
