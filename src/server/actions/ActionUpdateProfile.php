@@ -1,30 +1,47 @@
 <?php
+
+require_once __DIR__ . "/../daos/DatabaseController.php";
+
 class ActionUpdateProfile
 {
-
-    public function updateProfile($data)
+    public function execute($post, $session)
     {
         $db = new DatabaseController();
 
-        $id = $data['id'];
+        // Validación de datos
+        if (empty($post['name']) || empty($post['email']) || empty($post['username'])) {
+            echo "Por favor, complete todos los campos obligatorios.";
+            return false;
+        }
+
+        // Preparar datos para la actualización
+        $id = $post['id'];
         $updateData = [
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-            'mobilenumber' => $data['mobilenumber'],
-            'postcode' => $data['postcode'],
-            'username' => $data['username'],
-            'email' => $data['email']
+            'name' => $post['name'],
+            'surname' => $post['surname'],
+            'mobilenumber' => $post['mobilenumber'],
+            'postcode' => $post['postcode'],
+            'username' => $post['username'],
+            'email' => $post['email'],
         ];
 
         $condition = "id = :id";
         $updateData['id'] = $id;
 
+        // Actualizamos la base de datos
         $db->update('users', $updateData, $condition);
-        $updatedUser = $db->getById('users', $id);
 
         // Actualizar los datos en la sesión
-        session_start(); // Asegúrate de que la sesión esté inicializada
-        $_SESSION['logged_user'] = serialize(new User($updatedUser));
-        return true;
+        $updatedUser = $db->getById('users', $id);
+        if ($updatedUser) {
+            $session['logget_user'] = serialize(new User($updatedUser));
+            echo "Perfil actualizado con éxito.";
+            return true;
+        } else {
+            echo "Error al obtener los datos actualizados del usuario";
+        }
+        
     }
+
+    
 }

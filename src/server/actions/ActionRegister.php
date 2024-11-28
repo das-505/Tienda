@@ -55,7 +55,7 @@ class ActionRegister implements IAction
             $_SESSION["logged_user"] = serialize($loggedUser);
 
             // Redirigir al inicio
-            header('Location: ../../login.php');
+            header('Location: ../../index.php');
             exit();
         } else {
             echo "Error al registrar. Inténtelo de nuevo.";

@@ -152,18 +152,26 @@ class DatabaseController
     //para actualizar producto y perfil.
     public function update($table, $data, $condition)
     {
+        try{
+            $setClause = [];
+            foreach ($data as $key => $value) {
+                $setClause[] = "$key = :$key";
+            }
 
-        $setClause = [];
+            $setClauseString = implode(", ", $setClause);
+            $query = "UPDATE $table SET $setClauseString WHERE $condition";
+            $this->executeQuery($query, $data);
+            return true;
 
-        foreach ($data as $key => $value) {
-            $setClause[] = "$key = :$key";
+        }catch(PDOException $e){
+
+            echo "Error al actualizar:" . $e->getMessage();
+            return false;
         }
-        $setClauseString = implode(", ", $setClause);
-        $query = "UPDATE $table set $setClauseString WHERE $condition";
 
-        $this->executeQuery($query, $data);
-        return true;
     }
+
+
 
     // Método para cerrar la conexión
     public function close()

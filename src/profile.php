@@ -52,6 +52,7 @@ if (session_start() === PHP_SESSION_NONE) {
             <!-- Profile Settings Form -->
             <div class="w-full md:w-2/4 ">
                 <form action="profile.php" method="POST">
+
                     <h4 class="text-xl font-semibold mb-5">Profile Settings</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -97,6 +98,9 @@ if (session_start() === PHP_SESSION_NONE) {
                         </button>
 
                     </div>
+                    <input type="hidden" name="action" value="updateProfile">
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($loggedUser->getId()); ?>">
+
                 </form>
             </div>
         </div>

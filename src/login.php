@@ -6,6 +6,16 @@ require_once __DIR__ . "/server/daos/DatabaseController.php";
 
 session_start();
 
+//Para reparar, no deja acceder a la pagina de login. 
+/*
+if (!isset($_SESSION["logged_user"])) {
+  // Llamar correctamente al método de la clase Cookie
+  if (!Cookie::verifyCookieLogin($_SESSION)) {
+      header("Location: login.php"); // Redirigir al login si no hay sesión ni cookie válida
+      exit();
+  }
+}
+*/
 $userData = Cookie::getCookie("logged_user");
 
 $tablename = "users";

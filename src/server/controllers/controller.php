@@ -19,13 +19,27 @@ else
     switch ($_POST["action"]) {
         case 'register':
             $action = new ActionRegister();
-            echo (['success' => 'Usuario Registrado']);           
+            echo (['success' => 'Usuario Registrado']);
             break;
         case 'login':
             $action = new ActionLogin();
             break;
         case 'logout':
-            $_SESSION["logged_user"] = null;
+            //para eliminar el token de la base de datos.
+            $token = Cookie::getCookie('login_token');
+            if ($token) {
+                $db = new DatabaseController();
+                $updateData = ['token' => null];
+                $condition = "token = '$token'";
+                $db->update("users", $updateData, $condition);
+            }
+
+            //para eliminar la cookie
+            Cookie::deleteCookie("login_token");
+
+            $session["logged_user"] = null;
+            session_destroy();
+
             header('Location: ../../index.php');
             exit();
             break;
@@ -40,7 +54,7 @@ else
                 $action = new ActionDeleteProduct();
                 $result = $action->DeletProduct($_POST['id']);
                 echo $result ? "Producto Eliminado con exito." : "Error al eliminar el producto.";
-                header("Location: ../../admintPanel.php");
+                header("Location: ../../adminPanel.php");
             } else {
                 echo "ID del producto no especificado";
             }
@@ -61,10 +75,16 @@ else
 
         case 'updateProfile':
             $action = new ActionUpdateProfile;
+            $result = $action->execute($_POST, $_SESSION);
+            if ($result) {
+                echo "Perfil actualizado";
+            } else {
+                echo "Error al actualizar el perfil";
+            }
             break;
 
-         case 'addToCart':
-      //      $action = new ActionAddToCart();
+        case 'addToCart':
+            //      $action = new ActionAddToCart();
             break;
 
         default:

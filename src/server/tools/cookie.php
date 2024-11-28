@@ -30,5 +30,26 @@ class Cookie{
     {
         setcookie($name, "", time() - 3600, "/");
     }
+
+
+   public static function  verifyCookieLogin(&$session){
+
+        $db = new DatabaseController();
+    
+        $token = Cookie::getCookie('login_token');
+        if($token){
+    
+            $data = array("token" => $token);
+            $user = $db->getByData("users", $data);
+    
+            if(count($user) > 0){
+                $session["logged_user"] = serialize($user[0]);
+                return true;
+            }
+        }
+    
+        return false;
+    
+    }
 }
 ?>
