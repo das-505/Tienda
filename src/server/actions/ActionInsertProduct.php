@@ -55,7 +55,7 @@ class ActionInsertProduct implements IAction
             ];
 
             if ($db->insert('products', $data)) {
-                header("Location: ../../admintPanel.php");
+                header("Location: ../../adminPanel.php");
             } else {
                 echo "Error al guardar el producto en la base de datos.";
             }

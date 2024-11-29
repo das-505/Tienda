@@ -36,6 +36,16 @@ class ActionGetProduct
         return $this->db->getByData('products', $filters);
     }
 
+    /*
+    
+    //Obtener los productos por precio.(no funciona)
+    public function getProductByPrice($price){
+        // Filtrar por la categoría usando `getByData`
+        $filters = ['price' => $price];
+        return $this->db->getByData('products', $filters);
+    }
+ */
+    
 
 
 
