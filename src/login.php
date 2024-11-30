@@ -1,21 +1,12 @@
 <?php
+session_start();
 
 require_once __DIR__ . "/server/tools/cookie.php";
 require_once __DIR__ . "/server/popos/Users.php";
 require_once __DIR__ . "/server/daos/DatabaseController.php";
 
-session_start();
 
-//Para reparar, no deja acceder a la pagina de login. 
-/*
-if (!isset($_SESSION["logged_user"])) {
-  // Llamar correctamente al método de la clase Cookie
-  if (!Cookie::verifyCookieLogin($_SESSION)) {
-      header("Location: login.php"); // Redirigir al login si no hay sesión ni cookie válida
-      exit();
-  }
-}
-*/
+
 $userData = Cookie::getCookie("logged_user");
 
 $tablename = "users";
@@ -60,7 +51,7 @@ $db->close();
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
             <div class="mt-2">
-              <input id="email" name="email" type="email" autocomplete="email" value="<?= isset ($userData['username']) ? htmlspecialchars($userData['username']) : '' ?>" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
 

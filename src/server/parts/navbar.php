@@ -63,7 +63,7 @@ if (isset($_SESSION["logged_user"]))
             <div id="user-dropdown-menu" class="hidden absolute right-0 z-20 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
               <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
               <?php if ($loggedUser instanceof Admin && $loggedUser->isAdmin) { ?>
-                <a href="admintPanel.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Panel</a>
+                <a href="adminPanel.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Panel</a>
               <?php } ?>
               <form action="server/controllers/controller.php" method="POST">
                 <input type="hidden" name="action" value="logout">

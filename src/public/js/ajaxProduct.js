@@ -1,31 +1,47 @@
 /*Ajax para mostrar mostrar y clonar 
 los porductos de la base de datos
 */
-async function solicitarCatalogo(categoria = null) {
+async function solicitarCatalogo(categoria = null, minPrice = null, maxPrice = null) {
     try {
         // Construir la URL con o sin el parámetro de categoría
         let url = '/Tienda/src/server/controllers/ajaxController.php';
+        let params = [];
+
         if (categoria) {
-            url += `?categoria=${encodeURIComponent(categoria)}`;
+            params.push(`categoria=${encodeURIComponent(categoria)}`);
+        }
+        if (minPrice) {
+            params.push(`min_price=${encodeURIComponent(minPrice)}`);
+        }
+        if (maxPrice) {
+            params.push(`max_price=${encodeURIComponent(maxPrice)}`);
+        }
+        if (params.length > 0) {
+            url += `?${params.join('&')}`;
         }
 
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Error al obtener el catálogo de productos.');
-
-        const productos = await response.json();
-        mostrarCatalogo(productos);
+        const products = await response.json();
+        console.log(products);
+        mostrarCatalogo(products);
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-function mostrarCatalogo(productos) {
+
+function mostrarCatalogo(products) {
     const catalogoContainer = document.getElementById('catalogo-container');
 
     // Limpiar el contenedor antes de renderizar nuevos productos
     catalogoContainer.innerHTML = '';
+    if (!Array.isArray(products)) {
+         console.error('La respuesta no es un array:', products); 
+         return;
+         }
 
-    productos.forEach(producto => {
+
+    products.forEach(producto => {
         const card = document.createElement('div');
         card.classList.add(
             'group',
@@ -86,8 +102,17 @@ document.addEventListener('DOMContentLoaded', () => {
     solicitarCatalogo(); // Carga todos los productos inicialmente
 });
 
-// Ejemplo: Lógica para filtrar por categoría (puedes conectar esto a botones o un selector)
+// Ejemplo: Lógica para filtrar por categoría.
 document.getElementById('category-filter').addEventListener('change', (event) => {
     const categoriaSeleccionada = event.target.value;
     solicitarCatalogo(categoriaSeleccionada);
+});
+
+//para mostrar los productos por precio
+document.getElementById('filter-price').addEventListener('click', () => {
+    const minPrice = document.getElementById('min-price').value;
+    const maxPrice = document.getElementById('max-price').value;
+
+    solicitarCatalogo(null, minPrice, maxPrice);
+
 });

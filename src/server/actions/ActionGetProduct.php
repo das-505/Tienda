@@ -30,29 +30,25 @@ class ActionGetProduct
 
 
     // Obtener productos filtrados por categoría
-    public function getProductByCategory($category){
+    public function getProductByCategory($category)
+    {
         // Filtrar por la categoría usando `getByData`
         $filters = ['category' => $category];
         return $this->db->getByData('products', $filters);
     }
 
-    /*
-    
     //Obtener los productos por precio.(no funciona)
-    public function getProductByPrice($price){
-        // Filtrar por la categoría usando `getByData`
-        $filters = ['price' => $price];
+    public function getProductByPriceRange($minPrice, $maxPrice) {
+        $filters = [];
+        if ($minPrice !== null) {
+            $filters['price >='] = $minPrice;
+        }
+        if ($maxPrice !== null) {
+            $filters['price <='] = $maxPrice;
+        }
         return $this->db->getByData('products', $filters);
     }
- */
     
 
-
-
-
-
-
-
-
-    
 }
+?>

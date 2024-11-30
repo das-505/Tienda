@@ -33,7 +33,8 @@ class DatabaseController
     }
 
     // Método para obtener todos los registros de una tabla
-    public function getAll($table){
+    public function getAll($table)
+    {
 
         if ($table === 'products') {
             // Realiza un JOIN con la tabla 'file' para obtener la ruta de la imagen
@@ -52,28 +53,34 @@ class DatabaseController
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByData($table, $data = []){        
-
+    public function getByData($table, $data = [])
+    {
         $query = "SELECT * FROM " . $table;
-
+        $params = [];
         if (count($data) > 0) {
             $query .= " WHERE ";
-            $flag = true;
+            $conditions = [];
             foreach ($data as $key => $value) {
-                if ($flag)
-                    $flag = false;
-                else
-                    $query .= " AND ";
-
-                $query .= " $key = '$value' ";
+                if (strpos($key, ' ') !== false) {
+                    // Si el nombre tiene operadores como 'price >', ajusta el alias
+                    $operator = str_replace(' ', '_', $key);
+                    $conditions[] = "$key :$operator";
+                    $params[$operator] = $value;
+                } else {
+                    $conditions[] = "$key = :$key";
+                    $params[$key] = $value;
+                }
             }
+            $query .= implode(" AND ", $conditions);
         }
-        $stmt = $this->executeQuery($query);
+        $stmt = $this->executeQuery($query, $params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     // Método para obtener un registro por ID
-    public function getById($table, $id){
+    public function getById($table, $id)
+    {
 
         if ($table === 'products') {
             $query = "
@@ -84,7 +91,7 @@ class DatabaseController
             WHERE p.id = :id
         ";
             $params = ['id' => $id];
-        }elseif($table === 'users'){
+        } elseif ($table === 'users') {
             $query = "
             SELECT p.*, 
                    f.path AS image_path 
@@ -93,19 +100,17 @@ class DatabaseController
             WHERE p.id = :id
         ";
             $params = ['id' => $id];
-        }
-        
-        else{
+        } else {
 
             $query = "SELECT * FROM " . $table . " WHERE id = '$id'";
-            $params = ['id'=> $id];
+            $params = ['id' => $id];
         }
 
         $stmt = $this->executeQuery($query, $params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+
 
     // Método para insertar un registro
     public function insert($table, $data)
@@ -134,6 +139,8 @@ class DatabaseController
         }
     }
 
+
+    //Funcion que nos permite guardar imagenes a nuestra base de datos.
     public function saveImage($name, $price, $description, $imagePath)
     {
         // Definir los datos para la inserción
@@ -152,7 +159,7 @@ class DatabaseController
     //para actualizar producto y perfil.
     public function update($table, $data, $condition)
     {
-        try{
+        try {
             $setClause = [];
             foreach ($data as $key => $value) {
                 $setClause[] = "$key = :$key";
@@ -162,15 +169,20 @@ class DatabaseController
             $query = "UPDATE $table SET $setClauseString WHERE $condition";
             $this->executeQuery($query, $data);
             return true;
-
-        }catch(PDOException $e){
+        } catch (PDOException $e) {
 
             echo "Error al actualizar:" . $e->getMessage();
             return false;
         }
-
     }
 
+    public  function getUserByToken($token)
+    {
+        $query = "SELECT * FROM users WHERE token = :token";
+        $params = ['token' => $token];
+        $stmt = $this->executeQuery($query, $params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 
     // Método para cerrar la conexión

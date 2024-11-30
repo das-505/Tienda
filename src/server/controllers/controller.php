@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../tools/cookie.php";
 require_once __DIR__ . "/../daos/DatabaseController.php";
 require_once __DIR__ . "/../interfaces/IAction.php";
 require_once __DIR__ . "/../actions/ActionRegister.php";

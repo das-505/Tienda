@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json');
 
 require_once __DIR__ . '/../actions/ActionGetProduct.php';
@@ -6,12 +7,16 @@ require_once __DIR__ . '/../actions/ActionGetProduct.php';
 try {
     $action = new ActionGetProduct();
     
-    // Obtener la categoría de los parámetros de la solicitud (si existe)
+    // Obtener los parámetros de la solicitud
     $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : null;
+    $minPrice = isset($_GET['min-price']) ? $_GET['min-price'] : null;
+    $maxPrice = isset($_GET['max-price']) ? $_GET['max-price'] : null;
 
-    // Si se pasa una categoría, filtrar, de lo contrario, obtener todos los productos
+    // Filtrar productos según los parámetros
     if ($categoria) {
         $productos = $action->getProductByCategory($categoria);
+    } elseif ($minPrice !== null || $maxPrice !== null) {
+        $productos = $action->getProductByPriceRange($minPrice, $maxPrice);
     } else {
         $productos = $action->getProduct();
     }

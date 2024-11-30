@@ -73,9 +73,6 @@
     require_once "./server/parts/footer.php";
     ?>
   </footer>
-
-  <script src="public/js/ajaxProduct.js" defer></script>
-
 </div>
 
     <script src="public/js/ajaxProduct.js" defer></script>

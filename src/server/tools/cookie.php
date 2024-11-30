@@ -1,6 +1,7 @@
 <?php
 
-class Cookie{
+class Cookie
+{
 
     public static function setCookie($name, $value, $expiry = 172800)
     {
@@ -32,24 +33,19 @@ class Cookie{
     }
 
 
-   public static function  verifyCookieLogin(&$session){
+    public static function  verifyCookieLogin(&$session){
 
-        $db = new DatabaseController();
-    
-        $token = Cookie::getCookie('login_token');
-        if($token){
-    
-            $data = array("token" => $token);
-            $user = $db->getByData("users", $data);
-    
-            if(count($user) > 0){
-                $session["logged_user"] = serialize($user[0]);
+        $token = self::getCookie("login_token");
+        if ($token) {
+            $db = new DatabaseController();
+            $user = $db->getUserByToken($token);
+            if ($user) {
+                //para restaurar la sesion.
+                $session["logged_user"] = $user;
                 return true;
             }
         }
-    
         return false;
-    
+
     }
 }
-?>
